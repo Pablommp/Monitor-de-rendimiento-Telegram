@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import requests as req
 import time
 
-TELEGRAM_TOKEN = "TOKEN"
+TELEGRAM_TOKEN = "7643811393:AAEQ-H-bnWNyVXAHExZozEOalRTyE9Zn5bk"
 
 is_updating = False
 message_id = None
@@ -44,8 +44,16 @@ async def start_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sent_message = await context.bot.send_message(chat_id=chat_id, text="Recibiendo información...")
     message_id = sent_message.message_id
 
+    start_time = time.time()  # Marca el tiempo inicial
+
     while is_updating:
         try:
+            # Detener automáticamente después de 5 minutos
+            if time.time() - start_time > 300:
+                await update.message.reply_text("Se alcanzó el límite de 5 minutos. Deteniendo la actualización.")
+                is_updating = False
+                break
+
             cpu_percent = psutil.cpu_percent(interval=1)
             ram_percent = psutil.virtual_memory().percent
             ram_used = psutil.virtual_memory().used / (1024 ** 3)
@@ -101,4 +109,3 @@ if __name__ == "__main__":
 
     print("El bot está en ejecución...")
     application.run_polling()
-
