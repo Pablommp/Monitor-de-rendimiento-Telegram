@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import requests as req
 import time
 
-TELEGRAM_TOKEN = "7643811393:AAEQ-H-bnWNyVXAHExZozEOalRTyE9Zn5bk"
+TELEGRAM_TOKEN = "TOKEN"
 
 is_updating = False
 message_id = None
